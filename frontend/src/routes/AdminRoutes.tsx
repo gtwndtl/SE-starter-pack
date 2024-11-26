@@ -17,6 +17,12 @@ const CreateCustomer = Loadable(lazy(() => import("../pages/customer/create")));
 
 const EditCustomer = Loadable(lazy(() => import("../pages/customer/edit")));
 
+const Promotion = Loadable(lazy(() => import("../pages/promotion")));
+
+const CreatePromotion = Loadable(lazy(() => import("../pages/promotion/create")));
+
+const EditPromotion = Loadable(lazy(() => import("../pages/promotion/edit")));
+
 
 const AdminRoutes = (isLoggedIn : boolean): RouteObject => {
 
@@ -63,6 +69,40 @@ const AdminRoutes = (isLoggedIn : boolean): RouteObject => {
             path: "/customer/edit/:id",
 
             element: <EditCustomer />,
+
+          },
+
+        ],
+
+      },
+
+      {
+
+        path: "/promotion",
+
+        children: [
+
+          {
+
+            path: "/promotion",
+
+            element: <Promotion />,
+
+          },
+
+          {
+
+            path: "/promotion/create",
+
+            element: <CreatePromotion />,
+
+          },
+
+          {
+
+            path: "/promotion/edit/:id",
+
+            element: <EditPromotion />,
 
           },
 

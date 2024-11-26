@@ -8,8 +8,15 @@ import (
 	"example.com/se/config"
 
 	"example.com/se/controller/genders"
+	"example.com/se/controller/promotion"
+	
+	"example.com/se/controller/promotion_status"
+
+	"example.com/se/controller/promotion_type"
 
 	"example.com/se/controller/users"
+
+	"example.com/se/controller/cruisetrip"
 
 	"example.com/se/middlewares"
 )
@@ -52,9 +59,27 @@ func main() {
 
 		router.DELETE("/user/:id", users.Delete)
 
+
+		router.POST("/promotion", promotion.AddPromotion)
+
+		router.PUT("/promotion/:id", promotion.Update)
+
+		router.GET("/promotions", promotion.GetAll)
+
+		router.GET("/promotion/:id", promotion.Get)
+
+		router.DELETE("/promotion/:id", promotion.Delete)
+
+
+		router.GET("/cruisetrip", cruisetrip.GetAll)
+
 	}
 
 	r.GET("/genders", genders.GetAll)
+
+	r.GET("/types", promotion_type.GetAll)
+
+	r.GET("/status", promotion_status.GetAll)
 
 	r.GET("/", func(c *gin.Context) {
 

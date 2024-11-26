@@ -52,6 +52,14 @@ func SetupDatabase() {
 
        &entity.Genders{},
 
+       &entity.Promotion{},
+
+       &entity.CruiseTrip{},
+
+       &entity.Promotion_type{},
+
+       &entity.Promotion_status{},
+
    )
 
 
@@ -65,7 +73,34 @@ func SetupDatabase() {
    db.FirstOrCreate(&GenderFemale, &entity.Genders{Gender: "Female"})
 
 
-   hashedPassword, _ := HashPassword("123456")
+   TripType := entity.Promotion_type{Type: "Trip"}
+
+   CabinType := entity.Promotion_type{Type: "Cabin"}
+   
+   FoodType := entity.Promotion_type{Type: "Food"}
+
+
+   db.FirstOrCreate(&TripType, &entity.Promotion_type{Type: "Trip"})
+
+   db.FirstOrCreate(&CabinType, &entity.Promotion_type{Type: "Cabin"})
+
+   db.FirstOrCreate(&FoodType, &entity.Promotion_type{Type: "Food"})
+
+
+   StatusActive := entity.Promotion_status{Status: "Active"}
+
+   StatusFull := entity.Promotion_status{Status: "Full"}
+   
+   StatusExpired := entity.Promotion_status{Status: "Expired"}
+
+
+   db.FirstOrCreate(&StatusActive, &entity.Promotion_status{Status: "Active"})
+
+   db.FirstOrCreate(&StatusFull, &entity.Promotion_status{Status: "Full"})
+
+   db.FirstOrCreate(&StatusExpired, &entity.Promotion_status{Status: "Expired"})
+
+   hashedPassword, _ := HashPassword("1")
 
    BirthDay, _ := time.Parse("2006-01-02", "1988-11-12")
 
@@ -75,7 +110,7 @@ func SetupDatabase() {
 
        LastName:  "Analysis",
 
-       Email:     "sa@gmail.com",
+       Email:     "1@gmail.com",
 
        Age:       80,
 
@@ -89,7 +124,7 @@ func SetupDatabase() {
 
    db.FirstOrCreate(User, &entity.Users{
 
-       Email: "sa@gmail.com",
+       Email: "1@gmail.com",
 
    })
 

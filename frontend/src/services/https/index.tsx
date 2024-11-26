@@ -114,6 +114,106 @@ async function CreateUser(data: UsersInterface) {
 
 }
 
+async function GetPromotions() {
+
+  return await axios
+
+    .get(`${apiUrl}/promotions`, requestOptions)
+
+    .then((res) => res)
+
+    .catch((e) => e.response);
+
+}
+
+
+async function GetPromotionById(id: string) {
+
+  return await axios
+
+    .get(`${apiUrl}/promotion/${id}`, requestOptions)
+
+    .then((res) => res)
+
+    .catch((e) => e.response);
+
+}
+
+
+async function UpdatePromotionById(id: string, data: UsersInterface) {
+
+  return await axios
+
+    .put(`${apiUrl}/promotion/${id}`, data, requestOptions)
+
+    .then((res) => res)
+
+    .catch((e) => e.response);
+
+}
+
+
+async function DeletePromotionById(id: string) {
+
+  return await axios
+
+    .delete(`${apiUrl}/promotion/${id}`, requestOptions)
+
+    .then((res) => res)
+
+    .catch((e) => e.response);
+
+}
+
+
+async function CreatePromotion(data: UsersInterface) {
+
+  return await axios
+
+    .post(`${apiUrl}/promotion`, data, requestOptions)
+
+    .then((res) => res)
+
+    .catch((e) => e.response);
+
+}
+
+async function GetPromotionType() {
+
+  return await axios
+
+    .get(`${apiUrl}/types`, requestOptions)
+
+    .then((res) => res)
+
+    .catch((e) => e.response);
+
+}
+
+async function GetPromotionStatus() {
+
+  return await axios
+
+    .get(`${apiUrl}/status`, requestOptions)
+
+    .then((res) => res)
+
+    .catch((e) => e.response);
+
+}
+
+
+async function GetTrip() {
+
+  return await axios
+
+    .get(`${apiUrl}/trip`, requestOptions)
+
+    .then((res) => res)
+
+    .catch((e) => e.response);
+
+}
 
 export {
 
@@ -130,5 +230,24 @@ export {
   DeleteUsersById,
 
   CreateUser,
+
+
+
+  GetPromotions,
+
+  GetPromotionById,
+
+  UpdatePromotionById,
+
+  DeletePromotionById,
+
+  CreatePromotion,
+
+
+  GetPromotionType,
+  GetPromotionStatus,
+  
+
+  GetTrip,
 
 };
