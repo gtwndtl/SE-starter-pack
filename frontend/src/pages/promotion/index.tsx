@@ -15,6 +15,7 @@ import {
   GetPromotions,
   DeletePromotionById,
   GetPromotionType,
+  GetPromotionStatus, // Assuming this is the new API for fetching status
 } from "../../services/https/index";
 import { PromotionInterface } from "../../interfaces/Promotion";
 import { Link, useNavigate } from "react-router-dom";
@@ -23,9 +24,8 @@ import dayjs from "dayjs";
 function Promotions() {
   const navigate = useNavigate();
   const [promotions, setPromotions] = useState<PromotionInterface[]>([]);
-  const [promotionTypes, setPromotionTypes] = useState<Record<number, string>>(
-    {}
-  );
+  const [promotionTypes, setPromotionTypes] = useState<Record<number, string>>({});
+  const [promotionStatuses, setPromotionStatuses] = useState<Record<number, string>>({}); // New state for statuses
   const [messageApi, contextHolder] = message.useMessage();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedPromotion, setSelectedPromotion] = useState<PromotionInterface | null>(null);
@@ -68,16 +68,13 @@ function Promotions() {
     },
     {
       title: "สถานะ",
-      dataIndex: "status",
       key: "status",
-      render: (status) => (
-        <span>{status === "active" ? "ใช้งาน" : "ไม่ใช้งาน"}</span>
-      ),
+      render: (record) => <>{promotionStatuses[record.status_id] || "ไม่ระบุ"}</>, // Map status using promotionStatuses
     },
     {
       title: "ประเภท",
       key: "type",
-      render: (record) => <>{promotionTypes[record.type_id] || "ไม่ระบุ"}</>,
+      render: (record) => <>{promotionTypes[record.type_id] || "ไม่ระบุ"}</>, // Map type using promotionTypes
     },
     {
       title: "",
@@ -156,9 +153,29 @@ function Promotions() {
     }
   };
 
+  const getPromotionStatuses = async () => { // New function for getting promotion statuses
+    const res = await GetPromotionStatus();
+    if (res.status === 200) {
+      const statusMap = res.data.reduce(
+        (acc: Record<number, string>, promotion_status: { ID: number; status: string }) => {
+          acc[promotion_status.ID] = promotion_status.status; // Map status ID to status name
+          return acc;
+        },
+        {}
+      );
+      setPromotionStatuses(statusMap); // Store status names in state
+    } else {
+      messageApi.open({
+        type: "error",
+        content: res.data.error || "ไม่สามารถโหลดข้อมูลสถานะโปรโมชั่นได้",
+      });
+    }
+  };
+
   useEffect(() => {
     getPromotions();
     getPromotionTypes();
+    getPromotionStatuses(); // Fetch promotion statuses
   }, []);
 
   return (
